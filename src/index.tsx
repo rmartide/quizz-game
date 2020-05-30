@@ -3,6 +3,17 @@ import ReactDOM from 'react-dom';
 import './index.scss';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import io from "socket.io-client";
+import { Provider } from 'react-redux';
+
+const socket = io("http://127.0.0.1:3001");
+
+socket.on('connect', () => {
+  console.log('connected boiii')
+  socket.emit('topkek', {}, (data:string) => {
+    console.log(data);
+  })
+})
 
 ReactDOM.render(
   <React.StrictMode>
