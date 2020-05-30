@@ -1,11 +1,10 @@
 export type State = {
     users: User[],
-    loggedIn: boolean,
     currentUser: User
 }
 
 export type User = {
-    name: string,
+    username: string,
     score: number
 } | undefined;
 
@@ -20,4 +19,4 @@ export enum ActionType {
     SET_CURRENT_USER
 }
 
-export type ActionPayload = User | User[] | boolean;
+export type ActionPayload = User | User[];

@@ -12,10 +12,3 @@ export const setUsers = (users: User[]):Action => {
         payload: users
     }
 }
-
-export const setLoggedIn = (loggedIn: boolean):Action => {
-    return {
-        type: ActionType.LOGIN,
-        payload: loggedIn
-    }
-}
