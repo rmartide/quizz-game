@@ -3,22 +3,16 @@ import ReactDOM from 'react-dom';
 import './index.scss';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import io from "socket.io-client";
 import { Provider } from 'react-redux';
+import store from './redux/store';
+import Socket from './sockets';
 
-const socket = io("http://127.0.0.1:3001");
-
-socket.on('connect', () => {
-  console.log('connected boiii')
-  socket.emit('topkek', {}, (data:string) => {
-    console.log(data);
-  })
-})
+Socket.connect();
 
 ReactDOM.render(
-  <React.StrictMode>
+  <Provider store={store}>
     <App />
-  </React.StrictMode>,
+  </Provider>,
   document.getElementById('root')
 );
 
