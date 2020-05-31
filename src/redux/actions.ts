@@ -12,3 +12,10 @@ export const setUsers = (users: User[]):Action => {
         payload: users
     }
 }
+export const setCurrentQuestion = (index: number):Action => {
+    return {
+        type: ActionType.SET_CURRENT_QUESTION,
+        payload: index
+    }
+}
+

@@ -10,7 +10,7 @@ export default function Navbar() {
                     <LibraryMusic />
                 </IconButton>
                 <Typography variant="h6" color="inherit">
-                    Acierta la canción
+                    Test your knowledge
                 </Typography>
             </Toolbar>
         </AppBar>

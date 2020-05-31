@@ -7,8 +7,8 @@ const reload = require("reload");
 let app = express();
 let server = http.createServer(app);
 let io = socketIO(server);
-const { Users } = require('./utils/users');
-const { emitUpdateList } = require('./utils/common');
+const { Users } = require("./utils/users");
+const { emitUpdateList } = require("./utils/common");
 
 const users = new Users();
 
@@ -17,48 +17,51 @@ const port = process.env.PORT || 3001;
 
 app.use(express.static(publicPath));
 
-const room = 'room';
+const room = "room";
 
 io.on("connection", (socket) => {
 	console.log("New user connected");
 
 	socket.on("login", ({ username }, callback) => {
-        if(!users.usernameExists(username)) {
-            callback(users.addUser(socket.id, username));
-            socket.join(room);
-            emitUpdateList(io.to(room), users);
-        } else {
-            callback(undefined);
-        }
+		if (!users.usernameExists(username)) {
+			callback(users.addUser(socket.id, username));
+			socket.join(room);
+			emitUpdateList(io.to(room), users);
+		} else {
+			callback(undefined);
+		}
 	});
 
-	socket.on("answer-question", ({ response, questionNumber }, callback) => {
-		callback("yap");
+	socket.on("answer-question", ({ correct, questionNumber }, callback) => {
+		if (correct) {
+			users.addScore(socket.id);
+			emitUpdateList(io.to(room), users);
+		}
 	});
 
 	socket.on("get-users", (params, callback) => {
-		callback("yap");
+		callback(users.getUsers());
 	});
 
 	socket.on("get-current-user", (params, callback) => {
-		callback("yap");
+		callback(users.getUser(socket.id));
 	});
 
 	socket.on("load-question", ({ questionNumber }, callback) => {
-		callback("yap");
+		io.to(room).emit("update-play-field", questionNumber);
 	});
 
 	socket.on("load-results", (params, callback) => {
 		callback("yap");
-    });
-    
-    socket.on('disconnect', () => {
-        var user = users.removeUser(socket.id);
-        if (user) {
-            emitUpdateList(socket, users);
-        }
-        console.log('disconnected');
-    });
+	});
+
+	socket.on("disconnect", () => {
+		var user = users.removeUser(socket.id);
+		if (user) {
+			emitUpdateList(socket, users);
+		}
+		console.log("disconnected");
+	});
 });
 
 reload(app);

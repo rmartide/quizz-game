@@ -1,3 +1,4 @@
+import { setCurrentQuestion } from './../redux/actions';
 import io from "socket.io-client";
 import { User } from "../redux/redux.types";
 import { setUsers, setCurrentUser } from "../redux/actions";
@@ -20,8 +21,8 @@ const login = (username: string) => {
 	});
 };
 
-const answerQuestion = (response: string, questionNumber: number) => {
-	socket.emit("answer-question", { response, questionNumber }, (response: string) => {
+const answerQuestion = (correct: boolean, questionNumber: number) => {
+	socket.emit("answer-question", { correct, questionNumber }, (response: string) => {
 		console.log(response);
 	});
 };
@@ -39,6 +40,12 @@ const updateUsersList = () => {
 	});
 };
 
+const updatePlayField = () => {
+	socket.on("update-play-field", (index: number) => {
+		dispatch(setCurrentQuestion(index));
+	})
+}
+
 const getCurrentUser = () => {
 	socket.emit("get-current-user", {}, (user: User) => {
 		console.log(user);
@@ -46,9 +53,7 @@ const getCurrentUser = () => {
 };
 
 const loadQuestion = (questionNumber: number) => {
-	socket.emit("load-question", { questionNumber }, (user: User) => {
-		console.log(user);
-	});
+	socket.emit("load-question", { questionNumber });
 };
 
 const loadResults = () => {
@@ -66,5 +71,6 @@ export default {
 	loadQuestion,
 	loadResults,
 	updateUsersList,
-	setDispatch
+	setDispatch,
+	updatePlayField
 };

@@ -27,7 +27,9 @@ class Users {
     }
 
     getUsers() {
-        return this.users;
+        const usersFiltered = this.users.filter(user => user.username !== "admin");
+        usersFiltered.sort((a,b) => b.score - a.score);
+        return usersFiltered;
     }
 
     usernameExists(username) {
