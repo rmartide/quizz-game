@@ -26,7 +26,7 @@ function App() {
   const useStyles = makeStyles({
     details: {
       display: 'grid',
-      gridTemplateColumns: '1fr 1fr 1fr'
+      gridTemplateColumns: '1fr 2fr 1fr'
     },
     userList: {
       gridColumn: 1
