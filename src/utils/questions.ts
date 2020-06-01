@@ -11,7 +11,8 @@ const q1: Question = {
         d: '27 de abril de 2020'
     },
     correct: 'd',
-    number: 0
+    number: 0,
+    answer: ''
 }
 
 const q2: Question = {
@@ -23,7 +24,8 @@ const q2: Question = {
         d: 'Ph d'
     },
     correct: 'a',
-    number: 1
+    number: 1,
+    answer: ''
 }
 
 questions = [q1, q2];

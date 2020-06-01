@@ -19,3 +19,10 @@ export const setCurrentQuestion = (index: number):Action => {
     }
 }
 
+export const updateCurrentQuestion = (answer: string):Action => {
+    return {
+        type: ActionType.UPDATE_CURRENT_QUESTION,
+        payload: answer
+    }
+}
+

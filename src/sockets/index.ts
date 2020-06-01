@@ -1,4 +1,4 @@
-import { setCurrentQuestion } from './../redux/actions';
+import { setCurrentQuestion, updateCurrentQuestion } from './../redux/actions';
 import io from "socket.io-client";
 import { User } from "../redux/redux.types";
 import { setUsers, setCurrentUser } from "../redux/actions";
@@ -21,7 +21,8 @@ const login = (username: string) => {
 	});
 };
 
-const answerQuestion = (correct: boolean, questionNumber: number) => {
+const answerQuestion = (correct: boolean, questionNumber: number, option: string) => {
+	dispatch(updateCurrentQuestion(option));
 	socket.emit("answer-question", { correct, questionNumber }, (response: string) => {
 		console.log(response);
 	});

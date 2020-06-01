@@ -18,14 +18,16 @@ export enum ActionType {
     LOGIN,
     SET_USERS,
     SET_CURRENT_USER,
-    SET_CURRENT_QUESTION
+    SET_CURRENT_QUESTION,
+    UPDATE_CURRENT_QUESTION
 }
 
 export type Question = {
 	title: string,
 	answers: Answer,
     correct: string,
-    number: number
+    number: number,
+    answer: string
 } | undefined;
 
 export type Answer = {
@@ -36,4 +38,5 @@ export type Answer = {
     [key: string]: string
 }
 
-export type ActionPayload = User | User[] | number;
+
+export type ActionPayload = User | User[] | number | string;

@@ -1,4 +1,4 @@
-import { State, Action, ActionType, User } from "./redux.types";
+import { State, Action, ActionType, User, Question } from "./redux.types";
 import questions from '../utils/questions';
 const initialState: State = {
 	users: [],
@@ -22,6 +22,14 @@ export const reducer = (state = initialState, {type, payload}: Action): State =>
 			return {
 				...state,
 				currentQuestion: questions[payload as number]
+			};
+		case ActionType.UPDATE_CURRENT_QUESTION:
+			return {
+				...state,
+				currentQuestion: {
+					...state.currentQuestion,
+					answer: payload as string
+				} as Question
 			};
 		default:
 			return state;
