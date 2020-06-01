@@ -1,7 +1,8 @@
-import { setCurrentQuestion, updateCurrentQuestion } from './../redux/actions';
+import { setCurrentQuestion, updateCurrentQuestion, updateBackgroundImage } from './../redux/actions';
 import io from "socket.io-client";
 import { User } from "../redux/redux.types";
 import { setUsers, setCurrentUser } from "../redux/actions";
+import catEyes from "../assets/cat_eyes.jpg";
 
 let dispatch: any;
 
@@ -41,6 +42,17 @@ const updateUsersList = () => {
 	});
 };
 
+const setBackgroundImage = () => {
+	socket.on("update-background-image", (show: boolean) => {
+		const image = show ? catEyes : null;
+		dispatch(updateBackgroundImage(image));
+	});
+};
+
+const getBackgroundImage = (show: boolean) => {
+	socket.emit("get-background-image", {show});
+}
+
 const updatePlayField = () => {
 	socket.on("update-play-field", (index: number) => {
 		dispatch(setCurrentQuestion(index));
@@ -73,5 +85,7 @@ export default {
 	loadResults,
 	updateUsersList,
 	setDispatch,
-	updatePlayField
+	updatePlayField,
+	setBackgroundImage,
+	getBackgroundImage
 };

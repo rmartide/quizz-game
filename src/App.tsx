@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import './App.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import Sockets from './sockets';
-import { State, User } from './redux/redux.types';
+import { State, User, BackgroundImage } from './redux/redux.types';
 import Login from './components/Login';
 import Navbar from './components/Navbar';
 import Admin from './components/Admin';
@@ -13,6 +13,7 @@ function App() {
   const dispatch = useDispatch();
   const users: User[] = useSelector<State, User[]>(state => state.users);
   const currentUser: User = useSelector<State, User>(state => state.currentUser);
+  const backgroundImage: BackgroundImage = useSelector<State, BackgroundImage>(state => state.backgroundImage);
   const loggedIn: boolean = !!currentUser;
   const showAdmin: boolean = loggedIn && currentUser?.username === 'admin';
 
@@ -21,6 +22,7 @@ function App() {
   useEffect(() => {
     Sockets.updateUsersList();
     Sockets.updatePlayField();
+    Sockets.setBackgroundImage();
   }, []);
 
   const useStyles = makeStyles({
@@ -33,13 +35,16 @@ function App() {
     },
     questions: {
       gridColumn: 2
+    },
+    'app-body': {
+      backgroundImage: `url(${showAdmin ? null : backgroundImage})`
     }
   });
 
   const classes = useStyles();
 
   return (
-    <div>
+    <div className={classes["app-body"]}>
       <Navbar></Navbar>
       <div className="container">
         {!loggedIn ? <Login></Login> :

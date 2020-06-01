@@ -1,4 +1,4 @@
-import { ActionType, User, Action } from './redux.types';
+import { ActionType, User, Action, BackgroundImage } from './redux.types';
 
 export const setCurrentUser = (user: User):Action => {
     return {
@@ -23,6 +23,13 @@ export const updateCurrentQuestion = (answer: string):Action => {
     return {
         type: ActionType.UPDATE_CURRENT_QUESTION,
         payload: answer
+    }
+}
+
+export const updateBackgroundImage = (img: BackgroundImage):Action => {
+    return {
+        type: ActionType.UPDATE_BACKGROUND_IMAGE,
+        payload: img
     }
 }
 

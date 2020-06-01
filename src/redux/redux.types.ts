@@ -1,7 +1,8 @@
 export type State = {
     users: User[],
     currentUser: User,
-    currentQuestion: Question
+    currentQuestion: Question,
+    backgroundImage: BackgroundImage
 }
 
 export type User = {
@@ -19,7 +20,8 @@ export enum ActionType {
     SET_USERS,
     SET_CURRENT_USER,
     SET_CURRENT_QUESTION,
-    UPDATE_CURRENT_QUESTION
+    UPDATE_CURRENT_QUESTION,
+    UPDATE_BACKGROUND_IMAGE
 }
 
 export type Question = {
@@ -39,4 +41,6 @@ export type Answer = {
 }
 
 
-export type ActionPayload = User | User[] | number | string;
+export type ActionPayload = User | User[] | number | string | null;
+
+export type BackgroundImage = string | null;

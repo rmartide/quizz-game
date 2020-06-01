@@ -4,7 +4,6 @@ import questions from '../utils/questions';
 import Sockets from '../sockets';
 
 
-
 export default function Admin() {
 
     const [current, setCurrent] = useState(-1);
@@ -20,6 +19,10 @@ export default function Admin() {
     const handleClick = (index: number) => {
         setCurrent(index);
         Sockets.loadQuestion(index);
+    }
+
+    const changeBackgroundImage = (show: boolean) => {
+        Sockets.getBackgroundImage(show);
     }
 
     return (
@@ -40,7 +43,12 @@ export default function Admin() {
                 }
             </div>
             <div>
-                METER AQUÍ BOTONES PARA MOSTRAR IMÁGENES DURANTE EL CUESTIONARIOOOO
+                <Button variant="outlined" onClick={() => changeBackgroundImage(true)}>
+                    Show background image
+                </Button>
+                <Button variant="outlined" onClick={() => changeBackgroundImage(false)}>
+                    Hide background image
+                </Button>
             </div>
         </div>
     )

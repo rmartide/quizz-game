@@ -55,6 +55,11 @@ io.on("connection", (socket) => {
 		callback("yap");
 	});
 
+	socket.on("get-background-image", ({show}) => {
+		io.to(room).emit("update-background-image", show);
+	});
+
+
 	socket.on("disconnect", () => {
 		var user = users.removeUser(socket.id);
 		if (user) {

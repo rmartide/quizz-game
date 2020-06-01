@@ -3,7 +3,8 @@ import questions from '../utils/questions';
 const initialState: State = {
 	users: [],
 	currentUser: undefined,
-	currentQuestion: undefined
+	currentQuestion: undefined,
+	backgroundImage: null
 };
 
 export const reducer = (state = initialState, {type, payload}: Action): State => {
@@ -31,6 +32,11 @@ export const reducer = (state = initialState, {type, payload}: Action): State =>
 					answer: payload as string
 				} as Question
 			};
+			case ActionType.UPDATE_BACKGROUND_IMAGE:
+				return {
+					...state,
+					backgroundImage: payload as string
+				};
 		default:
 			return state;
 	}
