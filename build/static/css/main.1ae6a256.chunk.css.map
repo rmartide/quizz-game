@@ -1,0 +1,1 @@
+{"version":3,"sources":["index.scss","App.scss"],"names":[],"mappings":"AAAA,KACE,QAAW,CCDb,WACE,YAAa","file":"main.1ae6a256.chunk.css","sourcesContent":["body {\n  margin: 0px;\n}",".container {\n  padding: 50px;\n}"]}

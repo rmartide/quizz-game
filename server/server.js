@@ -13,9 +13,10 @@ const { emitUpdateList } = require("./utils/common");
 const users = new Users();
 
 const publicPath = path.join(__dirname, "/../static");
+const buildPath = path.join(__dirname, "/../build");
 const port = process.env.PORT || 3001;
 
-app.use(express.static(publicPath));
+app.use(express.static(buildPath));
 
 const room = "room";
 

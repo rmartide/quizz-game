@@ -11,7 +11,8 @@ import dog from "../assets/pet.jpg";
 
 let dispatch: any;
 
-const socket = io("http://127.0.0.1:3001");
+//const socket = io("http://127.0.0.1:3001");
+const socket = io();
 
 const connect = () => {
 	socket.on("connect", () => {});

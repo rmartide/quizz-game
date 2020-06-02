@@ -1,7 +1,11 @@
 {
-  "name": "quizz-game",
+  "name": "test-your-might",
   "version": "0.1.0",
+  "main": "index.js",
   "private": true,
+  "engines": {
+    "node": "13.3.0"
+  },
   "dependencies": {
     "@material-ui/core": "^4.10.0",
     "@material-ui/icons": "^4.9.1",
@@ -28,7 +32,8 @@
     "uws": "^10.148.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "node server/server.js",
+    "dev-start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
