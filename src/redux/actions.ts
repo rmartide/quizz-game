@@ -33,3 +33,10 @@ export const updateBackgroundImage = (img: BackgroundImage):Action => {
     }
 }
 
+export const showWinners = ():Action => {
+    return {
+        type: ActionType.SHOW_WINNERS,
+        payload: true
+    }
+}
+

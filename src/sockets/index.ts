@@ -1,8 +1,13 @@
-import { setCurrentQuestion, updateCurrentQuestion, updateBackgroundImage } from './../redux/actions';
+import { setCurrentQuestion, updateCurrentQuestion, updateBackgroundImage, showWinners } from './../redux/actions';
 import io from "socket.io-client";
 import { User } from "../redux/redux.types";
 import { setUsers, setCurrentUser } from "../redux/actions";
 import catEyes from "../assets/cat_eyes.jpg";
+import julio from "../assets/julio_iglesias.jpg";
+import dance from "../assets/dance.gif";
+import fail from "../assets/fail.gif";
+import blink from "../assets/blink.gif";
+import dog from "../assets/pet.jpg";
 
 let dispatch: any;
 
@@ -38,19 +43,19 @@ const getUsers = () => {
 const updateUsersList = () => {
 	socket.on("update-users-list", (users: User[]) => {
 		dispatch(setUsers(users));
-		console.log(users);
 	});
 };
 
 const setBackgroundImage = () => {
-	socket.on("update-background-image", (show: boolean) => {
-		const image = show ? catEyes : null;
+	const images:any = { julio, catEyes, dance, fail, blink, dog };
+	socket.on("update-background-image", (name: string) => {
+		const image = name !== '' ? images[name] : null;
 		dispatch(updateBackgroundImage(image));
 	});
 };
 
-const getBackgroundImage = (show: boolean) => {
-	socket.emit("get-background-image", {show});
+const getBackgroundImage = (name: string) => {
+	socket.emit("get-background-image", name);
 }
 
 const updatePlayField = () => {
@@ -69,11 +74,15 @@ const loadQuestion = (questionNumber: number) => {
 	socket.emit("load-question", { questionNumber });
 };
 
-const loadResults = () => {
-	socket.emit("load-results", {}, () => {
-		console.log("loading results");
-	});
-};
+const loadWinners = () => {
+	socket.emit('load-winners');
+}
+
+const updateShowWinners = () => {
+	socket.on('update-show-winners', () => {
+		dispatch(showWinners());
+	})
+}
 
 export default {
 	connect,
@@ -82,10 +91,11 @@ export default {
 	getUsers,
 	getCurrentUser,
 	loadQuestion,
-	loadResults,
 	updateUsersList,
 	setDispatch,
 	updatePlayField,
 	setBackgroundImage,
-	getBackgroundImage
+	getBackgroundImage,
+	loadWinners,
+	updateShowWinners
 };

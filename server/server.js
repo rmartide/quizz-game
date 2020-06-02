@@ -51,14 +51,13 @@ io.on("connection", (socket) => {
 		io.to(room).emit("update-play-field", questionNumber);
 	});
 
-	socket.on("load-results", (params, callback) => {
-		callback("yap");
-	});
 
-	socket.on("get-background-image", ({show}) => {
-		io.to(room).emit("update-background-image", show);
+	socket.on("get-background-image", (image) => {
+		io.to(room).emit("update-background-image", image);
 	});
-
+	socket.on("load-winners", (image) => {
+		io.to(room).emit("update-show-winners", image);
+	});
 
 	socket.on("disconnect", () => {
 		var user = users.removeUser(socket.id);

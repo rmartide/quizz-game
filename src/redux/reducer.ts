@@ -1,13 +1,14 @@
 import { State, Action, ActionType, User, Question } from "./redux.types";
-import questions from '../utils/questions';
+import questions from "../utils/questions";
 const initialState: State = {
 	users: [],
 	currentUser: undefined,
 	currentQuestion: undefined,
-	backgroundImage: null
+	backgroundImage: null,
+	showWinners: false
 };
 
-export const reducer = (state = initialState, {type, payload}: Action): State => {
+export const reducer = (state = initialState, { type, payload }: Action): State => {
 	switch (type) {
 		case ActionType.SET_USERS:
 			return {
@@ -32,11 +33,16 @@ export const reducer = (state = initialState, {type, payload}: Action): State =>
 					answer: payload as string
 				} as Question
 			};
-			case ActionType.UPDATE_BACKGROUND_IMAGE:
-				return {
-					...state,
-					backgroundImage: payload as string
-				};
+		case ActionType.UPDATE_BACKGROUND_IMAGE:
+			return {
+				...state,
+				backgroundImage: payload as string
+			};
+		case ActionType.SHOW_WINNERS:
+			return {
+				...state,
+				showWinners: payload as boolean
+			};
 		default:
 			return state;
 	}

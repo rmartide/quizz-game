@@ -21,8 +21,9 @@ export default function Admin() {
         Sockets.loadQuestion(index);
     }
 
-    const changeBackgroundImage = (show: boolean) => {
-        Sockets.getBackgroundImage(show);
+    const changeBackgroundImage = (name: string) => {
+        console.log(name)
+        Sockets.getBackgroundImage(name);
     }
 
     return (
@@ -42,12 +43,34 @@ export default function Admin() {
                         </Button>)
                 }
             </div>
+            <hr />
             <div>
-                <Button variant="outlined" onClick={() => changeBackgroundImage(true)}>
-                    Show background image
+                <Button variant="outlined" onClick={() => changeBackgroundImage('julio')}>
+                    Show julio
                 </Button>
-                <Button variant="outlined" onClick={() => changeBackgroundImage(false)}>
+                <Button variant="outlined" onClick={() => changeBackgroundImage('catEyes')}>
+                    Show cat eyes
+                </Button>
+                <Button variant="outlined" onClick={() => changeBackgroundImage('dog')}>
+                    Show pet the dog
+                </Button>
+                <Button variant="outlined" onClick={() => changeBackgroundImage('dance')}>
+                    Show dance gif
+                </Button>
+                <Button variant="outlined" onClick={() => changeBackgroundImage('fail')}>
+                    Show fail gif
+                </Button>
+                <Button variant="outlined" onClick={() => changeBackgroundImage('blink')}>
+                    Show blink gif
+                </Button>
+                <Button variant="outlined" onClick={() => changeBackgroundImage('')}>
                     Hide background image
+                </Button>
+            </div>
+            <hr />
+            <div>
+                <Button variant="outlined" onClick={Sockets.loadWinners}>
+                    Show winners
                 </Button>
             </div>
         </div>

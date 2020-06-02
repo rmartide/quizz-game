@@ -7,13 +7,15 @@ import Login from './components/Login';
 import Navbar from './components/Navbar';
 import Admin from './components/Admin';
 import PlayField from './components/PlayField';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Typography } from '@material-ui/core';
+import Podium from './components/Podium';
 
 function App() {
   const dispatch = useDispatch();
   const users: User[] = useSelector<State, User[]>(state => state.users);
   const currentUser: User = useSelector<State, User>(state => state.currentUser);
   const backgroundImage: BackgroundImage = useSelector<State, BackgroundImage>(state => state.backgroundImage);
+  const showWinners: boolean = useSelector<State, boolean>(state => state.showWinners);
   const loggedIn: boolean = !!currentUser;
   const showAdmin: boolean = loggedIn && currentUser?.username === 'admin';
 
@@ -23,6 +25,7 @@ function App() {
     Sockets.updateUsersList();
     Sockets.updatePlayField();
     Sockets.setBackgroundImage();
+    Sockets.updateShowWinners();
   }, []);
 
   const useStyles = makeStyles({
@@ -37,7 +40,11 @@ function App() {
       gridColumn: 2
     },
     'app-body': {
-      backgroundImage: `url(${showAdmin ? null : backgroundImage})`
+      backgroundImage: `url(${showAdmin ? null : backgroundImage})`,
+      height: '100vh'
+    },
+    user: {
+
     }
   });
 
@@ -50,10 +57,20 @@ function App() {
         {!loggedIn ? <Login></Login> :
           <div className={classes.details}>
             <div className={classes.userList}>
-              {users.map(user => <div key={user?.username}>{user?.username} {user?.score}</div>)}
+              {users.map(user =>
+                <div className={classes.user} key={user?.username}>
+                  <Typography variant="h6">
+                    {user?.username} {user?.score}
+                  </Typography>
+                </div>
+              )}
             </div>
             <div className={classes.questions}>
-              {showAdmin ? <Admin></Admin> : <PlayField></PlayField>}
+              {showAdmin ? <Admin></Admin> :
+                (showWinners ?
+                  <Podium users={users}></Podium> :
+                  <PlayField></PlayField>
+                )}
             </div>
           </div>
         }
