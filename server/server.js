@@ -12,11 +12,11 @@ const { emitUpdateList } = require("./utils/common");
 
 const users = new Users();
 
-const publicPath = path.join(__dirname, "/../static");
+const staticPath = path.join(__dirname, "/../static");
 const buildPath = path.join(__dirname, "/../build");
 const port = process.env.PORT || 3001;
 
-app.use(express.static(buildPath));
+app.use(express.static(staticPath));
 
 const room = "room";
 
@@ -52,7 +52,6 @@ io.on("connection", (socket) => {
 		io.to(room).emit("update-play-field", questionNumber);
 	});
 
-
 	socket.on("get-background-image", (image) => {
 		io.to(room).emit("update-background-image", image);
 	});
@@ -61,10 +60,8 @@ io.on("connection", (socket) => {
 	});
 
 	socket.on("disconnect", () => {
-		var user = users.removeUser(socket.id);
-		if (user) {
-			emitUpdateList(socket, users);
-		}
+		users.removeUser(socket.id);
+		emitUpdateList(io.to(room), users);
 		console.log("disconnected");
 	});
 });
