@@ -1,4 +1,4 @@
-import { ActionType, User, Action, BackgroundImage } from './redux.types';
+import { ActionType, User, Action, BackgroundImage, Answer } from './redux.types';
 
 export const setCurrentUser = (user: User):Action => {
     return {
@@ -37,6 +37,13 @@ export const showWinners = ():Action => {
     return {
         type: ActionType.SHOW_WINNERS,
         payload: true
+    }
+}
+
+export const showQuestionAnswers = (answers: Answer):Action => {
+    return {
+        type: ActionType.SHOW_QUESTION_ANSWERS,
+        payload: answers
     }
 }
 

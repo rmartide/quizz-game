@@ -20,6 +20,8 @@ app.use(express.static(staticPath));
 
 const room = "room";
 
+let answers;
+
 io.on("connection", (socket) => {
 	console.log("New user connected");
 
@@ -33,7 +35,8 @@ io.on("connection", (socket) => {
 		}
 	});
 
-	socket.on("answer-question", ({ correct, questionNumber }, callback) => {
+	socket.on("answer-question", ({ correct, option }, callback) => {
+		answers[option]++;
 		if (correct) {
 			users.addScore(socket.id);
 			emitUpdateList(io.to(room), users);
@@ -49,15 +52,27 @@ io.on("connection", (socket) => {
 	});
 
 	socket.on("load-question", ({ questionNumber }, callback) => {
+		answers = {
+			a: 0,
+			b: 0,
+			c: 0,
+			d: 0
+		}
 		io.to(room).emit("update-play-field", questionNumber);
 	});
 
 	socket.on("get-background-image", (image) => {
 		io.to(room).emit("update-background-image", image);
 	});
+
 	socket.on("load-winners", (image) => {
 		io.to(room).emit("update-show-winners", image);
 	});
+
+	socket.on("load-question-answers", (show) => {
+		const payload = show ? answers : undefined;
+		io.to(room).emit("show-question-answers", payload);
+	})
 
 	socket.on("disconnect", () => {
 		users.removeUser(socket.id);

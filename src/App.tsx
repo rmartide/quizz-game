@@ -26,6 +26,7 @@ function App() {
     Sockets.updatePlayField();
     Sockets.setBackgroundImage();
     Sockets.updateShowWinners();
+    Sockets.updateQuestionAnswers();
   }, []);
 
   const useStyles = makeStyles({

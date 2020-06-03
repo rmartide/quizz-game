@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Question, State } from '../redux/redux.types'
+import { Question, State, Answer } from '../redux/redux.types'
 import sockets from '../sockets';
 import { Card, CardContent, Typography, makeStyles } from '@material-ui/core';
 import gokuThumbsUp from '../assets/goku_thumb_up.jpg';
@@ -34,6 +34,7 @@ const useStyles = makeStyles({
 export default function PlayField() {
 
     const currentQuestion = useSelector<State, Question>(state => state.currentQuestion);
+    const questionAnswers = useSelector<State, Answer | undefined>(state => state.questionAnswers);
 
     const classes = useStyles();
 
@@ -45,12 +46,12 @@ export default function PlayField() {
         );
     const { answers, title, number, correct, answer } = currentQuestion;
     const handleClick = (option: string) => {
-        if (currentQuestion.answer === '')
+        if (currentQuestion.answer === '' && !questionAnswers)
             sockets.answerQuestion(option === correct, number, option);
     }
 
     const result = answer === correct;
-
+    console.log(questionAnswers);
     return (
         <div>
             <Typography className={classes["page-title"]} variant="h5">
@@ -72,13 +73,23 @@ export default function PlayField() {
                         )
                     })
             }
+            {!!questionAnswers &&
+                <div>
+                    <h2>Respuestas</h2>
+                    <p>a: {questionAnswers?.a}</p>
+                    <p>b: {questionAnswers?.b}</p>
+                    <p>c: {questionAnswers?.c}</p>
+                    <p>d: {questionAnswers?.d}</p>
+                </div>
+            }
 
-            {(result && answer !== '') &&
+            {(result && answer !== '' && !questionAnswers) &&
                 <img className={classes["image-full"]} src={gokuThumbsUp} alt="Goku te felicita" />
             }
-            {(!result && answer !== '') &&
+            {(!result && answer !== '' && !questionAnswers) &&
                 <img className={classes["image-full"]} src={gokuPunched} alt="Oh no, goku!" />
             }
+
         </div >
     )
 }

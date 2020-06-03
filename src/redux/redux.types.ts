@@ -3,7 +3,8 @@ export type State = {
     currentUser: User,
     currentQuestion: Question,
     backgroundImage: BackgroundImage,
-    showWinners: boolean
+    showWinners: boolean,
+    questionAnswers: Answer | undefined
 }
 
 export type User = {
@@ -23,7 +24,8 @@ export enum ActionType {
     SET_CURRENT_QUESTION,
     UPDATE_CURRENT_QUESTION,
     UPDATE_BACKGROUND_IMAGE,
-    SHOW_WINNERS
+    SHOW_WINNERS,
+    SHOW_QUESTION_ANSWERS
 }
 
 export type Question = {
@@ -40,9 +42,9 @@ export type Answer = {
     c: string,
     d: string,
     [key: string]: string
-}
+};
 
 
-export type ActionPayload = User | User[] | number | string | null | boolean;
+export type ActionPayload = User | User[] | number | string | null | boolean | Answer;
 
 export type BackgroundImage = string | null;

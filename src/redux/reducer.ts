@@ -1,11 +1,12 @@
-import { State, Action, ActionType, User, Question } from "./redux.types";
+import { State, Action, ActionType, User, Question, Answer } from "./redux.types";
 import questions from "../utils/questions";
 const initialState: State = {
 	users: [],
 	currentUser: undefined,
 	currentQuestion: undefined,
 	backgroundImage: null,
-	showWinners: false
+	showWinners: false,
+	questionAnswers: undefined
 };
 
 export const reducer = (state = initialState, { type, payload }: Action): State => {
@@ -42,6 +43,11 @@ export const reducer = (state = initialState, { type, payload }: Action): State 
 			return {
 				...state,
 				showWinners: payload as boolean
+			};
+		case ActionType.SHOW_QUESTION_ANSWERS:
+			return {
+				...state,
+				questionAnswers: payload as Answer
 			};
 		default:
 			return state;

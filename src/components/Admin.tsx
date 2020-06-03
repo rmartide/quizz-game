@@ -26,6 +26,10 @@ export default function Admin() {
         Sockets.getBackgroundImage(name);
     }
 
+    const handleQuestionAnswers = (show: boolean) => {
+        Sockets.loadQuestionAnswers(show);
+    }
+
     return (
         <div>
             Questions:
@@ -42,6 +46,15 @@ export default function Admin() {
                             Question {index}
                         </Button>)
                 }
+            </div>
+            <hr />
+            <div>
+                <Button variant="outlined" onClick={() => handleQuestionAnswers(true)}>
+                    Show question answers
+                </Button>
+                <Button variant="outlined" onClick={() => handleQuestionAnswers(false)}>
+                    Hide question answers
+                </Button>
             </div>
             <hr />
             <div>
@@ -62,6 +75,9 @@ export default function Admin() {
                 </Button>
                 <Button variant="outlined" onClick={() => changeBackgroundImage('blink')}>
                     Show blink gif
+                </Button>
+                <Button variant="outlined" onClick={() => changeBackgroundImage('fuegos')}>
+                    Show fuegos artificiales
                 </Button>
                 <Button variant="outlined" onClick={() => changeBackgroundImage('')}>
                     Hide background image

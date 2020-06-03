@@ -7,6 +7,7 @@ const useStyles = makeStyles({
         display: 'grid',
         gridTemplateColumns: '200px 200px 200px',
         gridTemplateRows: '150px 50px 150px',
+        backgroundColor: 'white',
         gridTemplateAreas: `
         '. winner .' 
         'second podium-top .' 

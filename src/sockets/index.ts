@@ -1,6 +1,6 @@
-import { setCurrentQuestion, updateCurrentQuestion, updateBackgroundImage, showWinners } from './../redux/actions';
+import { setCurrentQuestion, updateCurrentQuestion, updateBackgroundImage, showWinners, showQuestionAnswers } from "./../redux/actions";
 import io from "socket.io-client";
-import { User } from "../redux/redux.types";
+import { User, Answer } from "../redux/redux.types";
 import { setUsers, setCurrentUser } from "../redux/actions";
 import catEyes from "../assets/cat_eyes.jpg";
 import julio from "../assets/julio_iglesias.jpg";
@@ -8,6 +8,7 @@ import dance from "../assets/dance.gif";
 import fail from "../assets/fail.gif";
 import blink from "../assets/blink.gif";
 import dog from "../assets/pet.jpg";
+import fuegos from "../assets/fuegos-artificiales.gif";
 
 let dispatch: any;
 
@@ -30,7 +31,7 @@ const login = (username: string) => {
 
 const answerQuestion = (correct: boolean, questionNumber: number, option: string) => {
 	dispatch(updateCurrentQuestion(option));
-	socket.emit("answer-question", { correct, questionNumber }, (response: string) => {
+	socket.emit("answer-question", { correct, option }, (response: string) => {
 		console.log(response);
 	});
 };
@@ -48,22 +49,22 @@ const updateUsersList = () => {
 };
 
 const setBackgroundImage = () => {
-	const images:any = { julio, catEyes, dance, fail, blink, dog };
+	const images: any = { julio, catEyes, dance, fail, blink, dog, fuegos };
 	socket.on("update-background-image", (name: string) => {
-		const image = name !== '' ? images[name] : null;
+		const image = name !== "" ? images[name] : null;
 		dispatch(updateBackgroundImage(image));
 	});
 };
 
 const getBackgroundImage = (name: string) => {
 	socket.emit("get-background-image", name);
-}
+};
 
 const updatePlayField = () => {
 	socket.on("update-play-field", (index: number) => {
 		dispatch(setCurrentQuestion(index));
-	})
-}
+	});
+};
 
 const getCurrentUser = () => {
 	socket.emit("get-current-user", {}, (user: User) => {
@@ -73,17 +74,28 @@ const getCurrentUser = () => {
 
 const loadQuestion = (questionNumber: number) => {
 	socket.emit("load-question", { questionNumber });
+	loadQuestionAnswers(false);
 };
 
 const loadWinners = () => {
-	socket.emit('load-winners');
-}
+	socket.emit("load-winners");
+};
 
 const updateShowWinners = () => {
-	socket.on('update-show-winners', () => {
+	socket.on("update-show-winners", () => {
 		dispatch(showWinners());
-	})
-}
+	});
+};
+
+const loadQuestionAnswers = (show: boolean) => {
+	socket.emit("load-question-answers", show);
+};
+
+const updateQuestionAnswers = () => {
+	socket.on("show-question-answers", (answers: Answer) => {
+		dispatch(showQuestionAnswers(answers));
+	});
+};
 
 export default {
 	connect,
@@ -98,5 +110,7 @@ export default {
 	setBackgroundImage,
 	getBackgroundImage,
 	loadWinners,
-	updateShowWinners
+	updateShowWinners,
+	loadQuestionAnswers,
+	updateQuestionAnswers
 };
