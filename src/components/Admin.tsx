@@ -52,9 +52,6 @@ export default function Admin() {
                 <Button variant="outlined" onClick={() => handleQuestionAnswers(true)}>
                     Show question answers
                 </Button>
-                <Button variant="outlined" onClick={() => handleQuestionAnswers(false)}>
-                    Hide question answers
-                </Button>
             </div>
             <hr />
             <div>
