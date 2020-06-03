@@ -46,6 +46,10 @@ function App() {
     },
     user: {
 
+    },
+    'center-component': {
+      display: 'flex',
+      justifyContent: 'center'
     }
   });
 
@@ -69,7 +73,7 @@ function App() {
             <div className={classes.questions}>
               {showAdmin ? <Admin></Admin> :
                 (showWinners ?
-                  <Podium users={users}></Podium> :
+                  <div className={classes["center-component"]}><Podium users={users}></Podium></div> :
                   <PlayField></PlayField>
                 )}
             </div>
