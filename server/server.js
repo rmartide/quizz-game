@@ -16,7 +16,7 @@ const staticPath = path.join(__dirname, "/../static");
 const buildPath = path.join(__dirname, "/../build");
 const port = process.env.PORT || 3001;
 
-app.use(express.static(buildPath));
+app.use(express.static(staticPath));
 
 const room = "room";
 
