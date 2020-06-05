@@ -100,7 +100,7 @@ const q7: Question = {
 
 const q8: Question = {
 	title:
-		"El cuco delega cuando se trata de cuidar y alimentar a los polluelos pondrá su huevo en un nido de no vigilado de una especie más pequeña. ¿Qué hace la cría del cuco?",
+		"El cuco delega cuando se trata de cuidar y alimentar a los polluelos, pondrá su huevo en un nido no vigilado de una especie más pequeña. ¿Qué hace la cría del cuco?",
 	answers: {
 		a: "Reparte la comida sin ningún problema con sus hermanos de otra madre",
 		b: "Se va con su madre, la cual estaba esperando a que eclosionara el huevo",
